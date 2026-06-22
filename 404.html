@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Redirecting...</title></head>
+<body>
+<p id="msg" style="font-family:sans-serif;text-align:center;margin-top:4rem;">Redirecting...</p>
+<script>
+const slug = location.pathname.split('/').filter(Boolean).pop();
+if (slug && slug !== 'index.html') {
+  fetch(new URL('urls.json', location.href.replace(/\/[^/]*$/, '/')).href)
+    .then(r => r.json())
+    .then(urls => {
+      if (urls[slug]) location.replace(urls[slug]);
+      else document.getElementById('msg').textContent = 'Link tidak ditemukan.';
+    });
+} else {
+  document.getElementById('msg').textContent = 'Link tidak ditemukan.';
+}
+</script>
+</body>
+</html>
